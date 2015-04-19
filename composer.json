@@ -1,0 +1,37 @@
+{
+    "name": "xjchen/wechat",
+    "description": "微信开发工具包",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xujian Chen",
+            "email": "xchenxujian@126.com",
+            "homepage": "http://www.echo58.com"
+        }
+    ],
+    "keywords": [
+        "wechat",
+        "weixin",
+        "sdk"
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/config": "~5.0.0",
+        "illuminate/cache": "~5.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9",
+        "squizlabs/php_codesniffer": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xjchen\\Wechat\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Xjchen\\Wechat\\Test\\": "tests/"
+        }
+    }
+}
