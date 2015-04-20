@@ -20,7 +20,7 @@ class JsApi extends AbstractService
 
     public function getSignature($url, $nonceStr, $timestamp)
     {
-        if (!preg_match('/^http(s)?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\/([-a-zA-Z0-9@:%_\+.~?&\/=]*)$/', $url)) {
+        if (!preg_match('/^http(s)?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}(:\d+)?\/([-a-zA-Z0-9@:%_\+.~?&\/=]*)$/', $url)) {
             throw new InvalidArgumentException('调用getSignature时url参数不合法，请检查url');
         }
         $jsApiTicket = $this->getJsApiTicket();

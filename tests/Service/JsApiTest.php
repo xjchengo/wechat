@@ -34,7 +34,7 @@ class JsApiTest extends AbstractServiceTest
     public function testGetSignature()
     {
         $params = [
-            'url' => 'http://www.echo58.com/',
+            'url' => 'http://www.echo58.com:8000/',
             'noncestr' => rand(100000, 999999),
             'timestamp' => time(),
         ];
