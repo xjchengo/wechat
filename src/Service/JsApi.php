@@ -13,8 +13,17 @@ class JsApi extends AbstractService
             'type' => 'jsapi',
             'accessToken' => $accessToken
         ];
+        $cacheKey = $params['accessToken'].'-JsApiTicket';
+        if (static::$cache) {
+            if (static::$cache->has($cacheKey)) {
+                return static::$cache->get($cacheKey);
+            }
+        }
         $url = static::parseTemplate(static::JS_API_TICKET_URL, $params);
         $result = static::basicGetUrl($url);
+        if (static::$cache) {
+            static::$cache->put($cacheKey, $result['ticket'], $result['expires_in']/60);
+        }
         return $result['ticket'];
     }
 

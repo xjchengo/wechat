@@ -1,6 +1,6 @@
 <?php namespace Xjchen\Wechat\Service;
 
-use Xjchen\Wechat\Repository\Cache;
+use Xjchen\Wechat\Repository\CacheInterface;
 use GuzzleHttp\ClientInterface;
 use OutOfRangeException;
 use Xjchen\Wechat\Exception\WechatInterfaceException;
@@ -15,14 +15,14 @@ abstract class AbstractService
 
     const ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appId}&secret={$appSecret}';
 
-    public function __construct(array $config, ClientInterface $httpClient, Cache $cache = null)
+    public function __construct(array $config, ClientInterface $httpClient, CacheInterface $cache = null)
     {
         static::$config = $config;
         static::$httpClient = $httpClient;
         static::$cache = $cache;
     }
 
-    public function setCacheRepository(Cache $cache)
+    public function setCacheRepository(CacheInterface $cache)
     {
         static::$cache = $cache;
     }
@@ -80,8 +80,17 @@ abstract class AbstractService
             'appId' => static::$config['appId'],
             'appSecret' => static::$config['appSecret']
         ];
+        $cacheKey = $params['appId'].'-AccessToken';
+        if (static::$cache) {
+            if (static::$cache->has($cacheKey)) {
+                return static::$cache->get($cacheKey);
+            }
+        }
         $url = static::parseTemplate(static::ACCESS_TOKEN_URL, $params);
         $result = $this->basicGetUrl($url);
+        if (static::$cache) {
+            static::$cache->put($cacheKey, $result['access_token'], $result['expires_in']/60);
+        }
         return $result['access_token'];
     }
 
