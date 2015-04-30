@@ -62,4 +62,63 @@ class UtilTest extends \PHPUnit_Framework_TestCase
         $_SERVER['HTTP_USER_AGENT'] = 'mozilla/5.0 (iphone; cpu iphone os 5_1_1 like mac os x) applewebkit/534.46 (khtml, like gecko) mobile/9b206 micromessenger/5.0';
         $this->assertTrue(Util::isInIOS());
     }
+
+    public function testCamelCase()
+    {
+        $this->assertEquals('fooBar', Util::camel('FooBar'));
+        $this->assertEquals('fooBar', Util::camel('foo_bar'));
+        $this->assertEquals('fooBarBaz', Util::camel('Foo-barBaz'));
+        $this->assertEquals('fooBarBaz', Util::camel('foo-bar_baz'));
+    }
+    public function testStudlyCase()
+    {
+        $this->assertEquals('FooBar', Util::studly('fooBar'));
+        $this->assertEquals('FooBar', Util::studly('foo_bar'));
+        $this->assertEquals('FooBarBaz', Util::studly('foo-barBaz'));
+        $this->assertEquals('FooBarBaz', Util::studly('foo-bar_baz'));
+    }
+
+    public function testJsonDecode()
+    {
+        $json = [
+            'a' => [
+                'b' => 5
+            ]
+        ];
+        $this->assertEquals($json, Util::jsonDecode(json_encode($json), true));
+    }
+
+    public function testArrayToXml()
+    {
+        $xml = [
+            'a' => 5,
+            'b' => 'abc'
+        ];
+        $xmlString = '<xml><a>5</a><b><![CDATA[abc]]></b></xml>';
+
+        $this->assertEquals($xmlString, Util::arrayToXml($xml));
+    }
+
+    public function testXmlDecode()
+    {
+        $xml = [
+            'a' => 5,
+            'b' => 'abc'
+        ];
+        $xmlString = '<xml><a>5</a><b><![CDATA[abc]]></b></xml>';
+
+        $this->assertEquals($xml, Util::xmlDecode($xmlString));
+    }
+
+    public function testGenerateRandomString()
+    {
+        $charset = 'abcdedfhijklmn';
+        $length = 32;
+        $randomString = Util::generateRandomString($length, $charset);
+
+        $this->assertEquals($length, strlen($randomString));
+
+        $diff = array_diff(str_split($randomString), str_split($charset));
+        $this->assertTrue(empty($diff));
+    }
 }

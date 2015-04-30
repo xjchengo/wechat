@@ -4,7 +4,8 @@ use InvalidArgumentException;
 
 class JsApi extends AbstractService
 {
-    const JS_API_TICKET_URL = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={$accessToken}&type={$type}';
+    const JS_API_TICKET_URL =
+        'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={$accessToken}&type={$type}';
 
     public function getJsApiTicket()
     {

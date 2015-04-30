@@ -18,19 +18,6 @@ class JsApiTest extends AbstractServiceTest
         $this->assertTrue(is_string($result));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testGetSignatureUrlWrong()
-    {
-        $params = [
-            'url' => 'http://www.echo58.com',
-            'noncestr' => rand(100000, 999999),
-            'timestamp' => time(),
-        ];
-        $this->jsApiService->getSignature($params['url'], $params['noncestr'], $params['timestamp']);
-    }
-
     public function testGetSignature()
     {
         $params = [

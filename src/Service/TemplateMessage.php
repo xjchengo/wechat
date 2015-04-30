@@ -2,7 +2,8 @@
 
 class TemplateMessage extends AbstractService
 {
-    const CUSTOM_MESSAGE_SEND_URL = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={$accessToken}';
+    const CUSTOM_MESSAGE_SEND_URL =
+        'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={$accessToken}';
 
     public function send($message)
     {

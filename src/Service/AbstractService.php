@@ -13,7 +13,8 @@ abstract class AbstractService
 
     private $lastResult;
 
-    const ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appId}&secret={$appSecret}';
+    const ACCESS_TOKEN_URL =
+        'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appId}&secret={$appSecret}';
 
     public function __construct(array $config, ClientInterface $httpClient, CacheInterface $cache = null)
     {
