@@ -40,7 +40,6 @@ class Pay extends AbstractService
         $responseBody = Util::xmlDecode((string)$response->getBody());
 
         if ($responseBody['return_code'] == 'SUCCESS' and $responseBody['result_code'] == 'SUCCESS') {
-            $responseBody['pay_sign'] = static::generatePaySignature($params);
             return $responseBody;
         } else {
             throw new WechatPayException($responseBody['return_msg'], $responseBody);
@@ -76,5 +75,10 @@ class Pay extends AbstractService
     public function getLastParamString()
     {
         return static::$lastParamString;
+    }
+
+    public function getParams()
+    {
+        return static::$params;
     }
 }
