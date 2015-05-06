@@ -6,11 +6,11 @@ class WechatPayException extends Exception
 {
     protected $return;
 
-    public function __construct($message, $code, $return)
+    public function __construct($message, $return)
     {
         $this->return = $return;
 
-        parent::__construct($message, $code);
+        parent::__construct($message);
     }
 
     public function getReturn()

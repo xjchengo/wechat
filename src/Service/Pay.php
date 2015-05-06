@@ -38,7 +38,7 @@ class Pay extends AbstractService
         if ($responseBody['return_code'] == 'SUCCESS' and $responseBody['result_code'] == 'SUCCESS') {
             return $responseBody;
         } else {
-            throw new WechatPayException($responseBody['return_msg'], $responseBody['return_code'], $responseBody);
+            throw new WechatPayException($responseBody['return_msg'], $responseBody);
         }
     }
 
