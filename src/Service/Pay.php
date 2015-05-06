@@ -10,6 +10,8 @@ class Pay extends AbstractService
     const UNIFIED_ORDER_URL =
         'https://api.mch.weixin.qq.com/pay/unifiedorder';
 
+    protected static $params;
+
     protected static $lastParamString;
 
     public function createOrder($outTradeNo, $totalFee, $body, $nonceStr, $clientIp, $notifyUrl, $tradeType, $openid)
@@ -29,6 +31,8 @@ class Pay extends AbstractService
 
         $params['sign'] = self::generatePaySignature($params);
 
+        static::$params = $params;
+
         $encodedParam = Util::arrayToXml($params);
 
         $response = static::$httpClient->post(Pay::UNIFIED_ORDER_URL, ['body' => $encodedParam]);
@@ -36,6 +40,7 @@ class Pay extends AbstractService
         $responseBody = Util::xmlDecode((string)$response->getBody());
 
         if ($responseBody['return_code'] == 'SUCCESS' and $responseBody['result_code'] == 'SUCCESS') {
+            $responseBody['pay_sign'] = static::generatePaySignature($params);
             return $responseBody;
         } else {
             throw new WechatPayException($responseBody['return_msg'], $responseBody);
