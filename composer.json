@@ -12,7 +12,8 @@
     "keywords": [
         "wechat",
         "weixin",
-        "sdk"
+        "sdk",
+        "微信"
     ],
     "require": {
         "php": ">=5.4.0",
